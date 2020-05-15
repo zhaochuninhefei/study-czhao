@@ -17,7 +17,7 @@ public class Mod2Main {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/db_jdk11_test?useUnicode=true&characterEncoding=UTF-8&useSSL=false",
                 "root",
-                "overseas");
+                "xxxxxx");
              PreparedStatement ps = connection.prepareStatement("select * from tb_employee")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
