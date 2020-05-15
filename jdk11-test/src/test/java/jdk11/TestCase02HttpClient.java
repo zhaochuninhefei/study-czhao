@@ -90,14 +90,14 @@ import java.util.concurrent.TimeUnit;
 public class TestCase02HttpClient {
     public static void main(String[] args) throws Exception {
         TestCase02HttpClient me = new TestCase02HttpClient();
-//        me.testHttpClientGetSync();
-//        me.testHttpClientGetAsync();
-//        me.testHttpClientPost();
+        me.testHttpClientGetSync();
+        me.testHttpClientGetAsync();
+        me.testHttpClientPost();
 
         // 同一个HttpClient先登录网站获取token，再请求受限制资源，从而爬取需要认证的资源
-//        me.testLogin();
+        me.testLogin();
 
-        // TODO: 20-5-13 HttpClient支持websocket
+        // HttpClient支持websocket
         me.testWebsocket();
     }
 
@@ -165,12 +165,11 @@ public class TestCase02HttpClient {
 
     private void testLogin() throws Exception {
         var client = HttpClient.newHttpClient();
-        // 母巢测试环境登录URL
-        var urlLogin = "http://172.17.4.118:9001/warpgate/api/open/login";
+        // 某测试环境用户登录URL
+        var urlLogin = "http://x.x.x.x:xxxx/xxx/login";
         var requestObj = new HashMap<String, Object>();
-        requestObj.put("username", "zhaochun");
-        requestObj.put("password", "d131039c500dd5317b88796940344673");
-        requestObj.put("forceLdapPassword", false);
+        requestObj.put("username", "xxxxxx");
+        requestObj.put("password", "xxxxxxxxxxxxxxxx");
         var objectMapper = new ObjectMapper();
         var requestBodyJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj);
         var requestLogin = HttpRequest.newBuilder()
@@ -186,8 +185,8 @@ public class TestCase02HttpClient {
         var mpLoginResponse = objectMapper.readValue(loginResponse, Map.class);
         var dataLogin = (Map<String, Object>) mpLoginResponse.get("data");
         var token = dataLogin.get("token").toString();
-        // 母巢测试环境获取用户认证信息URL
-        var urlGetResource = "http://172.17.4.118:9001/warpgate/api/open/authority";
+        // 测试环境获取某资源的URL
+        var urlGetResource = "http://xxxx:xxxx/xxx/resource";
         var requestRes = HttpRequest.newBuilder()
                 .uri(URI.create(urlGetResource))
                 .header("Content-Type", "application/json;charset=UTF-8")
